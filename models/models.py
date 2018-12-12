@@ -49,19 +49,19 @@ def ConvLSTM_predictor(input_shape = (10, 500, 320, 5)):
     model.add(layers.Activation("relu"))
 
     # Rebuild latent embedding into future prediction.
-    model.add(layers.Conv2DTranspose(64, 5))
+    model.add(layers.Conv3DTranspose(64, 5))
     model.add(layers.BatchNormalization())    
     model.add(layers.Activation("relu"))
 
-    model.add(layers.Conv2DTranspose(96, 5))
+    model.add(layers.Conv3DTranspose(96, 5))
     model.add(layers.BatchNormalization())    
     model.add(layers.Activation("relu"))
     
-    model.add(layers.Conv2DTranspose(128, 5))
+    model.add(layers.Conv3DTranspose(128, 5))
     model.add(layers.BatchNormalization())    
     model.add(layers.Activation("relu"))
 
     # Rebuilt future 
-    model.add(layers.Conv2DTranspose(5, 5))
+    model.add(layers.Conv3DTranspose(5, 5))
 
     model.compile(loss=euclidean_loss, optimizer=Adam(lr=1e-3),metrics=['accuracy'])
