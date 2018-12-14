@@ -8,7 +8,7 @@ from tqdm import tqdm
 import subprocess 
 import re
 
-filenames = [file for file in tqdm(os.listdir("../data")) if isfile(join('../data/', file)) and re.match(r'.*2014[0-9]{6}(0[0-9]|5[0-9])', file) and file[0:3] == "DSD"]
+filenames = [file for file in tqdm(os.listdir("../data")) if isfile(join('../data/', file)) and re.match(r'.*2014[0-9]{6}(0[0-9]|5[0-9])', file) and file[0:3] == "DAA"]
 
 found_times = set()
 fixed_filenames = []
@@ -22,21 +22,23 @@ for filename in tqdm(filenames):
         fixed_filenames.append(filename)
         found_times.add(timestamp[:-2])
 
-things_we_want = ["DTA", "DAA", "OHA", "N0S"]
-subprocess.call(["mkdir", "../output/{}/".format("DSD")])
+things_we_want = ["DTA", "N1U", "N0Z", "N0S"]
+subprocess.call(["mkdir", "../output/{}/".format("DAA")])
 
 for thing in things_we_want:
     subprocess.call(["mkdir", "../output/{}/".format(thing)])
-
+count = 0 
 for filename in tqdm(fixed_filenames):
-    copy('../data/{}'.format(filename), "../output/{}/".format("DSD"))
+    copy('../data/{}'.format(filename), "../output/{}/".format("DAA"))
     for thing in things_we_want:
-        new_filename = filename.replace("DSD", thing)
+        new_filename = filename.replace("DAA", thing)
         try:
             copy('../data/{}'.format(new_filename), "../output/{}/".format(thing))
         except:
+            count += 1
             print("ERROR: {} was not found".format(new_filename))
 
+print("Num of misaligned files: {}".format(count))
 # hour = 0
 # file_dict = {} 
 # for hour in range(0,24):
