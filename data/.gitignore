@@ -1,2 +1,9 @@
 .*
 !/.gitignore
+DAA/
+DTA/
+N0S/
+N0Z/
+N1U/
+images.npy* 
+labels.npy 
